@@ -1,14 +1,31 @@
 'use strict';
 
 // Declare app level module which depends on views, and components
-angular.module('myApp', [
-  'ngRoute',
-  'myApp.view1',
-  'myApp.view2',
-  'myApp.version'
-]).
-config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
-  $locationProvider.hashPrefix('!');
+var myApp = angular.module('myApp', [
+    'oc.lazyLoad',
+    'ui.router',
+    'myApp.router',
+    'myApp.list',
+    'myApp.detil',
+    'myApp.login',
+    'myApp.version',
+    'ui.router.state.events',
+    'ngResource',
+    'myApp.resource',
 
-  $routeProvider.otherwise({redirectTo: '/view1'});
+
+])
+myApp.constant('GLOBAL', {
+    size: 10,
+    host: 'http://localhost:8002/'
+})
+myApp.run(['$rootScope', '$location', '$state', function ($rootScope, $location, $state) {
+//监听路由事件
+
+    $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+
+        console.log(toState.name);
+    })
+
 }]);
+
